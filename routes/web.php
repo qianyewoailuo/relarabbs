@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/', function () {
 //     echo 'helloworld';
 // });
+
+Route::get('/','PagesController@root')->name('root');
