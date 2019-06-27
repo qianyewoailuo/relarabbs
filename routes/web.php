@@ -44,3 +44,10 @@ Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('ver
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 // Route::get('/home', 'HomeController@index')->name('home');  // 主页路由已自定义,不在需要
+
+// User 相关路由
+Route::resource('users', 'UsersController',['only'=>['show','update','edit']]);
+// 相当于如下路由
+// Route::get('/users/{user}','UsersController@show')->name('users.show');
+// Route::get('/users/{user}/edit','UsersController@edit')->name('users.edit');
+// Route::patch('/users/{user}','UsersController@update')->name('users.update');   // 这里的patch也可以用put代替
