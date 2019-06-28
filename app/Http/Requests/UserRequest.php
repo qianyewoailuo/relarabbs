@@ -30,6 +30,8 @@ class UserRequest extends FormRequest
         return [
             // 表单内容验证规则
             'name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/|unique:users,name,' . Auth::id(),
+            // unique 数据库唯一，在 users 数据表里，字段为 name，Auth::id() 指示将此 ID 排除在外。
+            // unique:table,column,except idColumn
             'email' => 'required|email',
             'introduction' => 'max:80',
 
