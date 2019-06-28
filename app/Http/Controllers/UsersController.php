@@ -9,6 +9,12 @@ use App\Handlers\ImageUploadHandler;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        // auth中间件过滤非登录用户访问
+        $this->middleware('auth',['except'=>['show']]);
+    }
+
     // 个人主页展示
     public function show(User $user)
     {
@@ -18,12 +24,16 @@ class UsersController extends Controller
     // 个人资料编辑展示
     public function edit(User $user)
     {
+        $this->authorize('update',$user);   // 策略授权
+
         return view('users.edit', compact('user'));
     }
 
     // 个人资料编辑更新 version 2 : 使用表单请求类型过滤时
     public function update(User $user, UserRequest $request, ImageUploadHandler $imageUploadHandler)
     {
+        $this->authorize('update', $user);  // 策略授权
+
         // 获取表单提交的数据
         $data = $request->all();
 
