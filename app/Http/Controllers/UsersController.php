@@ -29,7 +29,7 @@ class UsersController extends Controller
 
         // 处理上传文件
         if ($request->file('avatar')) {
-            $result = $imageUploadHandler->save($request->file('avatar'), 'avatar', $user->id);
+            $result = $imageUploadHandler->save($request->file('avatar'), 'avatar', $user->id,416);
             if ($result) {
                 $data['avatar'] = $result['path'];
             } else {
