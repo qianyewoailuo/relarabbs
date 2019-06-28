@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
             // unique:table,column,except idColumn
             'email' => 'required|email',
             'introduction' => 'max:80',
-
+            'avatar'  => 'mimes:jpg,jpeg,bmp,png,gif|dimensions:min_width=208,min_height=208',
         ];
     }
 
@@ -44,6 +44,8 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
+            'avatar.mimes' => '头像图片格式类型必须为jpg,jpeg,bmp,png,gif',
+            'avatar.dimensions' => '头像图片分辨率必须为208px以上',
             'name.unique' => '用户名已被占用，请重新填写',
             'name.regex' => '用户名只支持英文、数字、横杠和下划线。',
             'name.between' => '用户名必须介于 3 - 25 个字符之间。',

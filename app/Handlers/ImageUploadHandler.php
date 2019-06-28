@@ -5,7 +5,7 @@ namespace App\Handlers;
 class ImageUploadHandler
 {
     // 上传文件后缀限制
-    protected $allowed_ext = ["png", "jpg", "jpeg", "gif"];
+    protected $allowed_ext = ["png", "jpg", "jpeg", "gif",'bmp'];
 
     // 保存上传图片
     public function save($file, $folder, $file_prefix='avatar')
