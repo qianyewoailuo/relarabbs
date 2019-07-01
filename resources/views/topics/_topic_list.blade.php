@@ -21,7 +21,7 @@
 
       <small class="media-body meta text-secondary">
 
-        <a class="text-secondary" href="#" title="{{ $topic->category->name }}">
+        <a class="text-secondary" href="{{ route('categories.show',$topic->category_id) }}" title="{{ $topic->category->name }}">
           <i class="far fa-folder"></i>
           {{ $topic->category->name }}
         </a>
@@ -38,7 +38,7 @@
 
     </div>
   </li>
-
+  {{-- 如果不是最后一次遍历循环就使用hr隔开 --}}
   @if ( ! $loop->last)
   <hr>
   @endif

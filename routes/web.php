@@ -53,3 +53,7 @@ Route::resource('users', 'UsersController',['only'=>['show','update','edit']]);
 // Route::patch('/users/{user}','UsersController@update')->name('users.update');   // 这里的patch也可以用put代替
 
 Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
+// 等价于下面
+// Route::get('categories','CategoriesController@show')->name('categories.show');
