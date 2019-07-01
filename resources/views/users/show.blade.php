@@ -27,9 +27,14 @@
     <hr>
 
     {{-- 用户发布的内容 --}}
-    <div class="card ">
+    <div class="card">
       <div class="card-body">
-        暂无数据 ~_~
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active bg-transparent" href="#">Ta 的话题</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Ta 的回复</a></li>
+        </ul>
+        <!-- 这里传递的参数是用户关联的话题及根据最新发布排序的5条分页记录 -->
+        @include('users._topics', ['topics' => $user->topics()->recent()->paginate(5)])
       </div>
     </div>
 
