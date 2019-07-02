@@ -11,6 +11,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>@yield('title', 'ReLaraBBS') - 重写练习 </title>
+  <!-- SEO 优化标签 -->
+  <meta name="description" content="@yield('description', 'LaraBBS 爱好者社区')" />
 
   <!-- Styles -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
