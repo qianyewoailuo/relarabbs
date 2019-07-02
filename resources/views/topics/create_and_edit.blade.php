@@ -72,6 +72,22 @@
   $(document).ready(function() {
     var editor = new Simditor({
       textarea: $('#editor'),
+      upload: {
+        url: "{{ route('topics.upload_image') }}",
+        params: {
+          _token: "{{ csrf_token() }}",
+        },
+        filekey: "upload_file",
+        connectionCount: 3,
+        leaveConfirm: '文件上传中,离开此页面将会终止上传'
+      },
+      // 上传后服务端返回的json数据为
+      // {
+      //   "success": true / false,
+      //   "msg": "error message",   #optional
+      //   "file_path": "[real file path]"
+      // }
+      pasteImage: true,
     });
   });
 </script>

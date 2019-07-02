@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Handlers\ImageUploadHandler;
 
 class TopicsController extends Controller
 {
@@ -15,6 +16,32 @@ class TopicsController extends Controller
     {
         // 限制未登录用户对 TOPICS 路由的访问权限
         $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+    public function uploadImage(Request $request, ImageUploadHandler $uploader)
+    {
+        // 初始化返回的数据,默认上传失败
+        $data = [
+            'success'   => false,
+            'msg'       => '上传失败',
+            'file_path' => ''
+        ];
+
+        // 判断是否有上传文件,并赋值给$file
+        if($file = $request->upload_file){
+            // 使用自定义的上传类保存图片到本地
+            $result = $uploader->save($request->upload_file,'topics',Auth::id(),1024);
+
+            // 如果保存成功
+            if($result){
+                $data['file_path'] = $result['path'];
+                $data['success'] = true;
+                $data['msg']    = '上传成功';
+            }
+        }
+
+        // 在 Laravel 的控制器方法中如果直接返回数组数据将会被转换为JSON
+        return $data;
     }
 
 	public function index(Request $request)
