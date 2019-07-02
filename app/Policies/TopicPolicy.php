@@ -12,8 +12,8 @@ class TopicPolicy extends Policy
         return $topic->user_id == $currentUser->id;
     }
 
-    public function destroy(User $user, Topic $topic)
+    public function destroy(User $currentUser, Topic $topic)
     {
-        return true;
+        return $topic->user_id == $currentUser->id;
     }
 }
