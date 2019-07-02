@@ -7,7 +7,11 @@ use App\Models\User;
 
 class Topic extends Model
 {
-    protected $fillable = ['title', 'body', 'user_id', 'category_id', 'reply_count', 'view_count', 'last_reply_user_id', 'order', 'excerpt', 'slug'];
+    // protected $fillable = ['title', 'body', 'user_id', 'category_id', 'reply_count', 'view_count', 'last_reply_user_id', 'order', 'excerpt', 'slug'];
+
+    protected $fillable = [
+        'title','body','category_id','excerpt','slug'
+    ];
 
     // 模型关联关系
     // 有以下关联设定，就能很快的通过 $topic->category、$topic->user 来获取到话题对应的分类和作者。

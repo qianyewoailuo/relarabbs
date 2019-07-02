@@ -28,8 +28,11 @@ class TopicsTableSeeder extends Seeder
                         $topic->category_id = $faker->randomElement($category_ids);
                     });
 
+        $topics = $topics->makeVisible([
+            'user_id'
+        ])->toArray();
         // 插入数据
-        Topic::insert($topics->toArray());
+        Topic::insert($topics);
     }
 
 }
