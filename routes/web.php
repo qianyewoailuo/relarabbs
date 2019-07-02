@@ -45,14 +45,20 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 
 // Route::get('/home', 'HomeController@index')->name('home');  // 主页路由已自定义,不在需要
 
-// User 相关路由
+// User 用户相关路由
 Route::resource('users', 'UsersController',['only'=>['show','update','edit']]);
 // 相当于如下路由
 // Route::get('/users/{user}','UsersController@show')->name('users.show');
 // Route::get('/users/{user}/edit','UsersController@edit')->name('users.edit');
 // Route::patch('/users/{user}','UsersController@update')->name('users.update');   // 这里的patch也可以用put代替
 
-Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+// Topic 话题相关路由
+Route::resource('topics', 'TopicsController', ['only' => ['index', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+Route::get('topics/{topic}/{slug?}','TopicsController@show')->name('topics.show');
+// 上面可以生成类似以下两种路由
+// http: //relarabbs.test/topics/115
+// http://relarabbs.test/topics/115/slug-transl...
 
 // 话题图片上传路由
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');

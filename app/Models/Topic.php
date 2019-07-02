@@ -66,4 +66,12 @@ class Topic extends Model
         // 此时会自动触发框架对数据模型 updated_at 时间戳的更新
         return $query->orderBy('updated_at','desc');
     }
+
+    /**
+     * topics.show slug链接生成
+     */
+    public function link($params = [])
+    {
+        return route('topics.show', array_merge([$this->id, $this->slug], $params));
+    }
 }
