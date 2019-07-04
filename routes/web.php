@@ -66,3 +66,5 @@ Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload
 Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 // 等价于下面
 // Route::get('categories','CategoriesController@show')->name('categories.show');
+
+Route::resource('replies', 'RepliesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

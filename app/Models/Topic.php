@@ -15,16 +15,32 @@ class Topic extends Model
 
     // 模型关联关系
     // 有以下关联设定，就能很快的通过 $topic->category、$topic->user 来获取到话题对应的分类和作者。
+
+    /**
+     * 关联关系
+     * 一个话题属于一种分类
+     */
     public function category()
     {
-        // 一个话题属于一种分类
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * 关联关系
+     * 一个话题属于一个用户
+     */
     public function user()
     {
-        // 一个话题属于一个用户
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * 关联关系
+     * 一个话题拥有多个回复
+     */
+    public function replies()
+    {
+        $this->hasMany(Reply::class);
     }
 
     // 话题列表排序
