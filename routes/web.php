@@ -68,3 +68,6 @@ Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 // Route::get('categories','CategoriesController@show')->name('categories.show');
 
 Route::resource('replies', 'RepliesController', ['only' => ['store','destroy']]);
+
+// 消息通知路由
+Route::get('notifications','NotificationsController@index')->name('notifications.index');
