@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
@@ -16,6 +17,10 @@ class NotificationsController extends Controller
     {
         // 获取登录用户的所有通知
         $notifications = \Auth::user()->notifications()->paginate(20);
+
+        // 清空未读消息,消息标志为已读
+        Auth::user()->markAsRead();
+
         return view('notifications.index', compact('notifications'));
     }
 }

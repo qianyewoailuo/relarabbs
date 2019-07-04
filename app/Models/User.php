@@ -38,6 +38,18 @@ class User extends Authenticatable implements MustVerifyEmailContract
     }
 
     /**
+     * 清空user未读消息以及标志notification消息已读
+     */
+    public function markAsRead()
+    {
+        // 清空user未读消息
+        $this->notification_count = 0;
+        $this->save();
+        // 标志notification消息已读
+        $this->unreadNotifications->markAsRead();
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
