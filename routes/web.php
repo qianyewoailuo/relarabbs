@@ -67,4 +67,4 @@ Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 // 等价于下面
 // Route::get('categories','CategoriesController@show')->name('categories.show');
 
-Route::resource('replies', 'RepliesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('replies', 'RepliesController', ['only' => ['store','destroy']]);
