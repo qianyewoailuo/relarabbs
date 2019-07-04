@@ -33,4 +33,13 @@ class TopicObserver
             dispatch(new TranslateSlug($topic));
         }
     }
+
+    /**
+     * 话题删除后相应回复一并删除
+     */
+    public function deleted(Topic $topic)
+    {
+        // 使用 DB 类避免删除回复时再次触发 Eloquent 事件使得 ReplyObserver 中执行 deleted 方法出错
+        \DB::table('replies')->where('topic_id', $topic->id)->delete();
+    }
 }

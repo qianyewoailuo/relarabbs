@@ -43,6 +43,15 @@ class Topic extends Model
         return $this->hasMany(Reply::class);
     }
 
+    /**
+     * 更新回复数
+     */
+    public function updateReplyCount()
+    {
+        $this->reply_count = $this->replies->count();
+        $this->save();
+    }
+
     // 话题列表排序
     /**
      * 本地作用域
