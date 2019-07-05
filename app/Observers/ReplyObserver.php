@@ -24,7 +24,7 @@ class ReplyObserver
         $reply->topic->updateReplyCount();
 
         // 通知话题作者有新评论
-        $reply->topic->user->notify(new TopicReplied($reply));
+        $reply->topic->user->replyNotify(new TopicReplied($reply));
     }
 
     /**

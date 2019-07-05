@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
     }
 
     // 重写 trait 中的notify方法
-    public function notify($instance)
+    public function replyNotify($instance)
     {
         // 如果要通知的人是当前用户，就不必通知了！
         if ($this->id == \Auth::id()) {
@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
             $this->increment('notification_count');
         }
 
-        $this->laravelNotify($instance);
+        $this->notify($instance);
     }
 
     /**
