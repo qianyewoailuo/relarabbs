@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 // PHP 的接口类，继承此类将确保 User 遵守契约，拥有上面提到的三个方法
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
@@ -78,6 +79,28 @@ class User extends Authenticatable implements MustVerifyEmailContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // 使用 属性修改器 为后台修改密码时进行加密处理
+    public function setPasswordAttribute($value)
+    {
+        if(strlen($value) != 60){
+            // 不是60位字符串的密码参数则做加密处理
+            $value = Hash::make($value);
+        }
+
+        $this->attributes['password'] = $value;
+    }
+
+    // 使用 属性修改器 为后台修改头像图片时进行地址补全
+    public function setAvatarAttribute($value)
+    {
+        // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
+        if(! starts_with($value,'http')){
+            $value = config('app.url')."/uploads/images/avatar/$value";
+        }
+
+        $this->attributes['avatar'] = $value;
+    }
 
     /**
      * 关联关系
