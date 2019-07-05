@@ -11,10 +11,13 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // PHP 的接口类，继承此类将确保 User 遵守契约，拥有上面提到的三个方法
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
     use MustVerifyEmailTrait;
+
+    use HasRoles;
 
     use Notifiable {
         // 将 trait 中的 notify 方法当做为 laravelNotify 引用
