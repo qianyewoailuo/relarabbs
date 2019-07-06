@@ -10,9 +10,11 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>@yield('title', 'ReLaraBBS') - 重写练习 </title>
+  <title>@yield('title', 'ReLaraBBS') - {{ setting('site_name','BBS重写练习') }} </title>
   <!-- SEO 优化标签 -->
-  <meta name="description" content="@yield('description', 'LaraBBS 爱好者社区')" />
+  <meta name="description" content="@yield('description', setting('seo_description','Lara社区'))" />
+
+  <meta name="keyword" content="@yield('keyword', setting('seo_keyword', 'LaraBBS,社区,论坛,开发者论坛'))" />
 
   <!-- Styles -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -37,7 +39,7 @@
     @include('layouts._footer')
   </div>
   @if (app()->isLocal())
-    @include('sudosu::user-selector')
+  @include('sudosu::user-selector')
   @endif
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}"></script>
