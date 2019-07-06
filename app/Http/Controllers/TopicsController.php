@@ -9,6 +9,7 @@ use App\Http\Requests\TopicRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Handlers\ImageUploadHandler;
+use App\Models\User;
 
 class TopicsController extends Controller
 {
@@ -28,12 +29,12 @@ class TopicsController extends Controller
         ];
 
         // 判断是否有上传文件,并赋值给$file
-        if($file = $request->upload_file){
+        if ($file = $request->upload_file) {
             // 使用自定义的上传类保存图片到本地
-            $result = $uploader->save($request->upload_file,'topics',Auth::id(),1024);
+            $result = $uploader->save($request->upload_file, 'topics', Auth::id(), 1024);
 
             // 如果保存成功
-            if($result){
+            if ($result) {
                 $data['file_path'] = $result['path'];
                 $data['success'] = true;
                 $data['msg']    = '上传成功';
@@ -44,14 +45,18 @@ class TopicsController extends Controller
         return $data;
     }
 
-	public function index(Request $request)
-	{
+    public function index(Request $request,User $user)
+    {
         $topics = Topic::query()->withOrder($request->order)
-                                ->with('category','user')->paginate(20);
-		return view('topics.index', compact('topics'));
-	}
+            ->with('category', 'user')->paginate(20);
 
-    public function show(Topic $topic,Request $request)
+        // 获取活跃用户数据
+        $active_users = $user->getActiveUsers();
+
+        return view('topics.index', compact('topics','active_users'));
+    }
+
+    public function show(Topic $topic, Request $request)
     {
         // 如果有slug参数则URL强制跳转到slug参数路由
         if (!empty($topic->slug) && $topic->slug != $request->slug) {
@@ -61,16 +66,16 @@ class TopicsController extends Controller
         return view('topics.show', compact('topic'));
     }
 
-	public function create(Topic $topic)
-	{
+    public function create(Topic $topic)
+    {
         // 获取分类数据
         $categories = Category::all();
 
-		return view('topics.create_and_edit', compact('topic','categories'));
-	}
+        return view('topics.create_and_edit', compact('topic', 'categories'));
+    }
 
-	public function store(TopicRequest $request,Topic $topic)
-	{
+    public function store(TopicRequest $request, Topic $topic)
+    {
         // 不能使用create创建 因为user_id必需但$fillable中限制用户自行写入
         // $topic = Topic::create($request->all());
 
@@ -82,30 +87,30 @@ class TopicsController extends Controller
         // return redirect()->route('topics.show', $topic->id)->with('success', '帖子创建成功');
         // slug优化跳转
         return redirect()->to($topic->link())->with('success', '话题创建成功');
-	}
+    }
 
-	public function edit(Topic $topic)
-	{
+    public function edit(Topic $topic)
+    {
         $this->authorize('update', $topic);
         $categories = Category::all();
-		return view('topics.create_and_edit', compact('topic','categories'));
-	}
+        return view('topics.create_and_edit', compact('topic', 'categories'));
+    }
 
-	public function update(TopicRequest $request, Topic $topic)
-	{
-		$this->authorize('update', $topic);
-		$topic->update($request->all());
+    public function update(TopicRequest $request, Topic $topic)
+    {
+        $this->authorize('update', $topic);
+        $topic->update($request->all());
 
         // return redirect()->route('topics.show', $topic->id)->with('success', '话题编辑成功');
         // slug优化跳转
         return redirect()->to($topic->link())->with('success', '话题编辑成功');
-	}
+    }
 
-	public function destroy(Topic $topic)
-	{
-		$this->authorize('destroy', $topic);
-		$topic->delete();
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+        $topic->delete();
 
-		return redirect()->route('topics.index')->with('success', '话题删除成功');
-	}
+        return redirect()->route('topics.index')->with('success', '话题删除成功');
+    }
 }
