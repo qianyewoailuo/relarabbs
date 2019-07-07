@@ -15,6 +15,8 @@
         <hr>
         <h5><strong>注册于</strong></h5>
         <p>{{$user->created_at->diffForHumans()}}</p>
+        <h5><strong>最后活跃于</strong></h5>
+        <p title="{{  $user->last_actived_at }}">{{ $user->last_actived_at->diffForHumans() }}</p>
       </div>
     </div>
   </div>
@@ -42,10 +44,10 @@
           </li>
         </ul>
         @if (if_query('tab', 'replies'))
-          @include('users._replies', ['replies' => $user->replies()->with('topic')->recent()->paginate(5)])
+        @include('users._replies', ['replies' => $user->replies()->with('topic')->recent()->paginate(5)])
         @else
         <!-- 这里传递的参数是用户关联的话题及根据最新发布排序的5条分页记录 -->
-          @include('users._topics', ['topics' => $user->topics()->recent()->paginate(5)])
+        @include('users._topics', ['topics' => $user->topics()->recent()->paginate(5)])
         @endif
       </div>
     </div>

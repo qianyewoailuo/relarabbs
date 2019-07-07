@@ -49,7 +49,7 @@ class TopicsController extends Controller
     public function index(Request $request,User $user,Link $link)
     {
         $topics = Topic::query()->withOrder($request->order)
-            ->with('category', 'user')->paginate(20);
+            ->with('category', 'user','replies')->paginate(20);
 
         // 获取活跃用户数据
         $active_users = $user->getActiveUsers();
