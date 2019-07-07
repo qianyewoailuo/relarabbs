@@ -9,14 +9,12 @@ use App\Models\User;
 
 class UserObserver
 {
-    public function creating(User $user)
+    public  function saving(User $user)
     {
-        //
-    }
-
-    public function updating(User $user)
-    {
-        //
+        // 默认头像
+        if(empty($user->avatar)){
+            $user->avatar = "https://s2.ax1x.com/2019/05/05/EwxTl6.png";
+        }
     }
 
     // public function deleted(User $user)
