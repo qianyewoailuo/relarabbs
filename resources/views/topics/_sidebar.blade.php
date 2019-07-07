@@ -24,3 +24,22 @@
   </div>
 </div>
 @endif
+
+@if (count($links))
+<div class="card mt-4">
+  <div class="card-body pt-2">
+    <div class="text-center mt-1 mb-0 text-muted">资源推荐</div>
+    <hr class="mt-2 mb-3">
+    @foreach ($links as $link)
+    <a class="media mt-2" href="{{ $link->link }}">
+      <div class="media-left media-middle mr-2 ml-1">
+        <img src="https://cdn.learnku.com//uploads/communities/WtC3cPLHzMbKRSZnagU9.png" width="24px" height="24px" class="media-object">
+      </div>
+      <div class="media-body">
+        <span class="media-heading text-muted">{{ $link->title }}</span>
+      </div>
+    </a>
+    @endforeach
+  </div>
+</div>
+@endif

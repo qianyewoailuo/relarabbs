@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Handlers\ImageUploadHandler;
 use App\Models\User;
+use App\Models\Link;
 
 class TopicsController extends Controller
 {
@@ -45,7 +46,7 @@ class TopicsController extends Controller
         return $data;
     }
 
-    public function index(Request $request,User $user)
+    public function index(Request $request,User $user,Link $link)
     {
         $topics = Topic::query()->withOrder($request->order)
             ->with('category', 'user')->paginate(20);
@@ -53,7 +54,10 @@ class TopicsController extends Controller
         // 获取活跃用户数据
         $active_users = $user->getActiveUsers();
 
-        return view('topics.index', compact('topics','active_users'));
+        // 获取推荐资源
+        $links = $link->getLinkCached();
+
+        return view('topics.index', compact('topics','active_users','links'));
     }
 
     public function show(Topic $topic, Request $request)
