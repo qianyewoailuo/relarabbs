@@ -19,7 +19,10 @@
 //     echo 'helloworld';
 // });
 
-Route::get('/','PagesController@root')->name('root');
+// Route::get('/','PagesController@root')->name('root');
+Route::get('/','TopicsController@index')->name('root');
+
+
 Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
 
 // Auth::routes(); // 等价于下面的4部分路由,为了直观使用下面路由
